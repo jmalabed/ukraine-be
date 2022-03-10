@@ -1,9 +1,10 @@
-require(dotenv).config();
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const PORT = 9000;
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 require("./db/db");
 
 //import controllers
