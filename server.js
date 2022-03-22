@@ -16,6 +16,7 @@ const videoController = require("./controllers/videoController");
 const whiteList = [
   "http://localhost:3000",
   "https://ukraine-fe-949od8386-jmalabed.vercel.app",
+  "https://ukrainebe.herokuapp.com",
 ];
 
 const corsOptions = {
