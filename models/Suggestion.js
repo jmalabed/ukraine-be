@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const suggestionSchema = mongoose.Schema(
   {
-    title: String,
     body: String,
   },
   { timestamps: true }

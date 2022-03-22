@@ -6,6 +6,7 @@ const DB_URL = process.env.DB_URL || "mongodb://127.0.0.1:27017/ukraine";
 mongoose.connection.on("error", (err) => {
   console.log(err.message + "is Mongod not running?");
 });
+
 mongoose.connection.on("disconnected", () => console.log("mongo disconnected"));
 
 // Connect to mongo
@@ -14,5 +15,5 @@ mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
 });
 mongoose.connection.once("open", () => {
-  console.log("connected to mongoose...");
+  console.log("connected to mongoose...", DB_URL);
 });

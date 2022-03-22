@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -10,8 +10,13 @@ require("./db/db");
 //import controllers
 const blogPostController = require("./controllers/blogPostController");
 const suggestionController = require("./controllers/suggestionController");
+const personController = require("./controllers/personController");
+const videoController = require("./controllers/videoController");
 
-const whiteList = ["http://localhost:3000"];
+const whiteList = [
+  "http://localhost:3000",
+  "https://ukraine-fe-949od8386-jmalabed.vercel.app",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -31,6 +36,8 @@ app.use(bodyParser.json());
 //Controllers!
 app.use("/blog", blogPostController);
 app.use("/suggestion", suggestionController);
+app.use("/person", personController);
+app.use("/video", videoController);
 
 app.listen(PORT, () => {
   console.log("Now listening on port ", PORT, "👌");
