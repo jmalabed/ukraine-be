@@ -39,6 +39,14 @@ app.use("/suggestion", suggestionController);
 app.use("/person", personController);
 app.use("/video", videoController);
 
+app.get("/", async (req, res) => {
+  try {
+    res.send("Welcome to the Ukraine PTC Backend Server.");
+  } catch (e) {
+    res.send(e);
+  }
+});
+
 app.listen(PORT, () => {
-  console.log("Now listening on port ", PORT, "👌");
+  console.log("Now listening on port ", PORT);
 });

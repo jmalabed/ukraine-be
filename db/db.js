@@ -1,6 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const DB_URL = process.env.DB_URL || "mongodb://127.0.0.1:27017/ukraine";
+const DB_URL = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/ukraine";
 
 //Error and disconnection
 mongoose.connection.on("error", (err) => {
