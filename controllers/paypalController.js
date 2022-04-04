@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   try {
     const amount = req.body;
     console.log(amount);
-    const donationMade = await Donation.create(amount);
+    const donationMade = await Donation.create({ amount: amount });
   } catch (e) {
     res.status(400).json(e);
   }
