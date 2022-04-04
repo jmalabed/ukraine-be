@@ -12,6 +12,7 @@ const blogPostController = require("./controllers/blogPostController");
 const suggestionController = require("./controllers/suggestionController");
 const personController = require("./controllers/personController");
 const videoController = require("./controllers/videoController");
+const paypalController = require("./controllers/paypalController");
 
 const whiteList = [
   "http://localhost:3000",
@@ -39,6 +40,7 @@ app.use("/blog", blogPostController);
 app.use("/suggestion", suggestionController);
 app.use("/person", personController);
 app.use("/video", videoController);
+app.use("/donation", paypalController);
 
 app.get("/", async (req, res) => {
   try {

@@ -2,6 +2,24 @@ const express = require("express");
 const router = express.Router();
 const Video = require("../models/Video");
 
+const parse = require("csv-parse");
+const fs = require("fs");
+const csv = require("csv-parser");
+
+// parse CSV takes the url from the csv file and truncates to just the embedID.
+const parseCSV = async (url) => {
+  let results = [];
+  fs.createReadStream(url)
+    .pipe(csv())
+    .on("data", (data) => {
+      data.url = data.url.slice(32, 43);
+      results.push(data);
+    })
+    .on("end", () => console.log(results));
+
+  return results;
+};
+
 // get all videos
 router.get("/", async (req, res) => {
   try {
@@ -48,6 +66,22 @@ router.post("/", async (req, res) => {
   try {
     const newVideo = await Video.create(req.body);
     res.status(200).json(newVideo);
+  } catch (e) {
+    res.status(400).json(e);
+  }
+});
+
+// only run through postman after updating local CSV file from google doc.
+router.post("/manyVideos", async (req, res) => {
+  try {
+    let videoList = parseCSV("./team_data/SiteVideos.csv");
+    const videosAlreadyUp = await Video.find({});
+    const existEID = await videosAlreadyUp.map((vid) => vid.url);
+    const newVids = videoList.filter(
+      (newVid) => existEID.includes(newVid.url) === false
+    );
+    const newUpload = await Video.insertMany(newVids);
+    res.status(200).json(newUpload);
   } catch (e) {
     res.status(400).json(e);
   }
