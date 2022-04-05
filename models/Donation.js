@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const donationSchema = new mongoose.Schema(
+const donationSchema = mongoose.Schema(
   {
-    name: String,
     amount: { type: Number, required: true },
+    name: String,
   },
   { timestamps: true }
 );
