@@ -16,7 +16,6 @@ const parseCSV = async (url) => {
       results.push(data);
     })
     .on("end", () => console.log(results));
-
   return results;
 };
 
