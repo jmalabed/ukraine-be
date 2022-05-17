@@ -73,12 +73,17 @@ router.post("/", async (req, res) => {
 // only run through postman after updating local CSV file from google doc.
 router.post("/manyVideos", async (req, res) => {
   try {
-    let videoList = parseCSV("./team_data/SiteVideos.csv");
+    let videoList = await parseCSV("./team_data/SiteVideos.csv");
     const videosAlreadyUp = await Video.find({});
-    const existEID = await videosAlreadyUp.map((vid) => vid.url);
-    const newVids = videoList.filter(
-      (newVid) => existEID.includes(newVid.url) === false
-    );
+    let newVids = null;
+    if (videosAlreadyUp.length > 0) {
+      const existEID = await videosAlreadyUp.map((vid) => vid.url);
+      newVids = videoList.filter(
+        (newVid) => existEID.includes(newVid.url) === false
+      );
+    } else {
+      newVids = videoList;
+    }
     const newUpload = await Video.insertMany(newVids);
     res.status(200).json(newUpload);
   } catch (e) {
